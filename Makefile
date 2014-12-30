@@ -1,19 +1,17 @@
 PACKAGE = docker
-BUILD_DIR = /tmp/$(PACKAGE)-build
 RELEASE_DIR = /tmp/$(PACKAGE)-release
 RELEASE_FILE = /tmp/$(PACKAGE).tar.gz
 
-PACKAGE_VERSION = $$(awk -F= '/^version/ {print $$2}' upstream/package/info)
+PACKAGE_VERSION = $$(cat upstream/VERSION)
 PATCH_VERSION = $$(cat version)
 VERSION = $(PACKAGE_VERSION)-$(PATCH_VERSION)
-CONF_FLAGS = --enable-static --enable-ipv6 --disable-slashpackage --enable-monotonic
 
 .PHONY : default manual container version build push local
 
-default: upstream/Makefile container
+default: upstream container
 
-upstream/Makefile:
-	git submodule update --init
+upstream:
+	git clone git://github.com/docker/docker upstream
 
 manual:
 	./meta/launch /bin/bash || true
@@ -22,11 +20,10 @@ container:
 	./meta/launch
 
 build:
-	rm -rf $(BUILD_DIR)
-	cp -R upstream $(BUILD_DIR)
-	cd $(BUILD_DIR) && CC="musl-gcc" ./configure --prefix=$(RELEASE_DIR) $(CONF_FLAGS)
-	make -C $(BUILD_DIR)
-	make -C $(BUILD_DIR) install
+	make -C upstream binary
+	rm -rf $(RELEASE_DIR)
+	mkdir -p $(RELEASE_DIR)/usr/bin
+	cp upstream/bundles/$(PACKAGE_VERSION)/binary/docker-$(PACKAGE_VERSION) $(RELEASE_DIR)/usr/bin/docker
 	cd $(RELEASE_DIR) && tar -czvf $(RELEASE_FILE) *
 
 version:
