@@ -1,11 +1,12 @@
 PACKAGE = docker
 ORG = amylum
-BUILD_DIR = /tmp/$(PACKAGE)-build
+BUILD_DIR = ./$(PACKAGE)-build
 RELEASE_DIR = /tmp/$(PACKAGE)-release
 RELEASE_FILE = /tmp/$(PACKAGE).tar.gz
 
 PACKAGE_VERSION = $$(cat upstream/VERSION)
 PATCH_VERSION = $$(cat version)
+GITCOMMIT = $$(git -C upstream rev-parse --short HEAD)
 VERSION = $(PACKAGE_VERSION)-$(PATCH_VERSION)
 
 .PHONY : default manual container version build push local
@@ -24,12 +25,14 @@ container:
 build:
 	rm -rf $(BUILD_DIR)
 	cp -R upstream $(BUILD_DIR)
-	make -C $(BUILD_DIR) binary
+	sed -i 's/DOCKER_ENVS := \\/DOCKER_ENVS := -e DOCKER_GITCOMMIT \\/' $(BUILD_DIR)/Makefile
+	DOCKER_GITCOMMIT=$(GITCOMMIT) make -C $(BUILD_DIR) binary
 	rm -rf $(RELEASE_DIR)
 	mkdir -p $(RELEASE_DIR)/usr/bin $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)
-	cp upstream/bundles/$(PACKAGE_VERSION)/binary/docker-$(PACKAGE_VERSION) $(RELEASE_DIR)/usr/bin/docker
-	cp upstream/LICENSE $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)/LICENSE
+	cp $(BUILD_DIR)/bundles/$(PACKAGE_VERSION)/binary/docker-$(PACKAGE_VERSION) $(RELEASE_DIR)/usr/bin/docker
+	cp $(BUILD_DIR)/LICENSE $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)/LICENSE
 	cd $(RELEASE_DIR) && tar -czvf $(RELEASE_FILE) *
+	rm -rf $(BUILD_DIR)
 
 version:
 	@echo $$(($(PATCH_VERSION) + 1)) > version
