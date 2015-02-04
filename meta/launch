@@ -4,10 +4,8 @@ docker run \
     --rm -t -i \
     -v $SSH_AUTH_SOCK:/auth.sock \
     -e SSH_AUTH_SOCK=/auth.sock \
-    -v $(pwd):$(pwd) \
+    -v $(pwd):/opt/build \
     -v ~/.gitconfig:/etc/gitconfig \
-    -v $(which docker):/usr/local/bin/docker \
-    -v /var/run/docker.sock:/var/run/docker.sock \
-    -w $(pwd) \
-    dock0/build $1
+    -w /opt/build \
+    docker-pkg $1
 

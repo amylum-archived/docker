@@ -1,12 +1,12 @@
 PACKAGE = docker
 ORG = amylum
-BUILD_DIR = ./$(PACKAGE)-build
+BUILD_DIR = /tmp/go/src/github.com/docker/docker
 RELEASE_DIR = /tmp/$(PACKAGE)-release
 RELEASE_FILE = /tmp/$(PACKAGE).tar.gz
 
 PACKAGE_VERSION = $$(cat upstream/VERSION)
 PATCH_VERSION = $$(cat version)
-GITCOMMIT = $$(git -C upstream rev-parse --short HEAD)
+GITCOMMIT = $(shell git -C upstream rev-parse --short HEAD)
 VERSION = $(PACKAGE_VERSION)-$(PATCH_VERSION)
 
 .PHONY : default manual container version build push local
@@ -16,17 +16,21 @@ default: upstream/Makefile container
 upstream/Makefile:
 	git submodule update --init
 
-manual:
+build_container:
+	docker build -t docker-pkg meta
+
+manual: build_container
 	./meta/launch /bin/bash || true
 
-container:
+container: build_container
 	./meta/launch
 
 build:
+	mkdir -p $(BUILD_DIR)
 	rm -rf $(BUILD_DIR)
 	cp -R upstream $(BUILD_DIR)
 	sed -i 's/DOCKER_ENVS := \\/DOCKER_ENVS := -e DOCKER_GITCOMMIT \\/' $(BUILD_DIR)/Makefile
-	DOCKER_GITCOMMIT=$(GITCOMMIT) make -C $(BUILD_DIR) binary
+	cd $(BUILD_DIR) && DOCKER_GITCOMMIT=$(GITCOMMIT) ./hack/make.sh binary
 	rm -rf $(RELEASE_DIR)
 	mkdir -p $(RELEASE_DIR)/usr/bin $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)
 	cp $(BUILD_DIR)/bundles/$(PACKAGE_VERSION)/binary/docker-$(PACKAGE_VERSION) $(RELEASE_DIR)/usr/bin/docker
