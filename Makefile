@@ -9,23 +9,23 @@ PATCH_VERSION = $$(cat version)
 GITCOMMIT = $(shell git -C upstream rev-parse --short HEAD)
 VERSION = $(PACKAGE_VERSION)-$(PATCH_VERSION)
 
-.PHONY : default manual container version build push local
+.PHONY : default submodule build_container manual container version build push local
 
-default: upstream/Makefile container
+default: container
 
-upstream/Makefile:
+submodule:
 	git submodule update --init
 
 build_container:
 	docker build -t docker-pkg meta
 
-manual: build_container
+manual: build_container submodule
 	./meta/launch /bin/bash || true
 
 container: build_container
 	./meta/launch
 
-build:
+build: submodule
 	mkdir -p $(BUILD_DIR)
 	rm -rf $(BUILD_DIR)
 	cp -R upstream $(BUILD_DIR)
