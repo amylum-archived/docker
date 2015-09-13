@@ -30,6 +30,7 @@ build: submodule
 	rm -rf $(BUILD_DIR)
 	cp -R upstream $(BUILD_DIR)
 	sed -i 's/DOCKER_ENVS := \\/DOCKER_ENVS := -e DOCKER_GITCOMMIT \\/' $(BUILD_DIR)/Makefile
+	patch -p1 -d $(BUILD_DIR) < patches/f83d05c3be3c3bcc84f6fa229504848ee8078321.patch
 	cd $(BUILD_DIR) && DOCKER_GITCOMMIT=$(GITCOMMIT) ./hack/make.sh binary
 	rm -rf $(RELEASE_DIR)
 	mkdir -p $(RELEASE_DIR)/usr/bin $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)
