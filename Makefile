@@ -33,7 +33,7 @@ build: submodule
 	cd $(BUILD_DIR) && DOCKER_GITCOMMIT=$(GITCOMMIT) ./hack/make.sh binary
 	rm -rf $(RELEASE_DIR)
 	mkdir -p $(RELEASE_DIR)/usr/bin $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)
-	cp $(BUILD_DIR)/bundles/$(PACKAGE_VERSION)/binary/docker-$(PACKAGE_VERSION) $(RELEASE_DIR)/usr/bin/docker
+	cp $(BUILD_DIR)/bundles/latest/*/*-$(PACKAGE_VERSION) $(RELEASE_DIR)/usr/bin/
 	cp $(BUILD_DIR)/LICENSE $(RELEASE_DIR)/usr/share/licenses/$(PACKAGE)/LICENSE
 	cd $(RELEASE_DIR) && tar -czvf $(RELEASE_FILE) *
 	rm -rf $(BUILD_DIR)
