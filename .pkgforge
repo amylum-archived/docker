@@ -4,8 +4,13 @@ org 'amylum'
 patch 'envvar.patch'
 
 build do
-  gitcommit = `git -C upstream rev-parse --short HEAD`
-  run './hack/make.sh binary', 'DOCKER_GITCOMMIT' => gitcommit
+  gopath = tmpdir(:gopath)
+  run "mkdir -p #{gopath}/src/github.com/docker"
+  run "ln -s #{tmpdir(:build)} #{gopath}/src/github.com/docker/docker"
+
+  gitcommit = `git -C upstream rev-parse --short HEAD`.chomp
+  run './hack/make.sh binary', 'DOCKER_GITCOMMIT' => gitcommit, 'GOPATH' => gopath
+
   run "mkdir -p #{releasedir}/usr/bin"
   run "cp bundles/latest/*/* #{releasedir}/usr/bin/"
 end
