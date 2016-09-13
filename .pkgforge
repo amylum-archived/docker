@@ -7,14 +7,16 @@ build do
   gopath = tmpdir(:gopath)
   run "mkdir -p #{gopath}/src/github.com/docker"
   run "ln -s #{tmpdir(:build)} #{gopath}/src/github.com/docker/docker"
+  run "cp -R #{tmpdir(:build)}/vendor/* #{gopath}/"
 
   gitcommit = `git -C upstream rev-parse --short HEAD`.chomp
   run './hack/make.sh binary', 'DOCKER_GITCOMMIT' => gitcommit, 'GOPATH' => gopath
 
   run "mkdir -p #{releasedir}/usr/bin"
-  run "cp bundles/latest/*/* #{releasedir}/usr/bin/"
+  run "cp bundles/latest/binary-client/docker #{releasedir}/usr/bin/"
+  run "cp bundles/latest/binary-daemon/{dockerd,docker-proxy} #{releasedir}/usr/bin/"
 end
 
 test do
-  run 'docker version'
+  run 'docker -v'
 end
