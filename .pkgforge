@@ -1,0 +1,15 @@
+name 'docker'
+org 'amylum'
+
+patch 'envvar.patch'
+
+build do
+  gitcommit = `git -C upstream rev-parse --short HEAD`
+  run './hack/make.sh binary', 'DOCKER_GITCOMMIT' => gitcommit
+  run "mkdir -p #{releasedir}/usr/bin"
+  run "cp bundles/latest/*/* #{releasedir}/usr/bin/"
+end
+
+test do
+  run 'docker version'
+end
