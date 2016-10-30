@@ -1,8 +1,6 @@
 name 'docker'
 org 'amylum'
 
-patch 'envvar.patch'
-
 build do
   gopath = tmpdir(:gopath)
   run "mkdir -p #{gopath}/src/github.com/docker"
