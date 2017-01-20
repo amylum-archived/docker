@@ -12,7 +12,7 @@ build do
 
   run "mkdir -p #{releasedir}/usr/bin"
   run "cp bundles/latest/binary-client/docker #{releasedir}/usr/bin/"
-  run "cp bundles/latest/binary-daemon/{dockerd,docker-proxy} #{releasedir}/usr/bin/"
+  run "cp bundles/latest/binary-daemon/dockerd #{releasedir}/usr/bin/"
 end
 
 test do
