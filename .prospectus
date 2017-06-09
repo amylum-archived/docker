@@ -14,7 +14,7 @@ item do
   actual do
     git_tag
     regex /^(.*)-\d+$/
-  endi
+  end
 
   extend ProspectusPkgforge::DepItems
   extend ProspectusCircleci::Build.new(my_slug)
