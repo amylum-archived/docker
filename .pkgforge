@@ -1,6 +1,26 @@
 name 'docker'
 org 'amylum'
 
+deps(
+  lvm2: {
+    version: '2.02.174-2',
+    checksum: 'cdb1e0aba4e0f9cd03db5ab1f76c70717f7b9884be57fc6ce9fb8e7a6a91c920'
+  },
+  'linux-api-headers': {
+    version: '4.13-1',
+    checksum: '50b2288419fe132c061bdf3d297293011929abc1092ffaa5e523ad6549b4f5fa'
+  },
+  'btrfs-progs': {
+    version: '4.13-1',
+    checksum: '711150f1bda529d7f8b139950c66d1a1b0b14b18d40000121aec8b09a7114c56'
+  }
+)
+
+cflags
+harden
+
+patch 'ldflags.patch'
+
 build do
   gopath = tmpdir(:gopath)
   run "mkdir -p #{gopath}/src/github.com/docker"
@@ -8,7 +28,14 @@ build do
   run "cp -R #{tmpdir(:build)}/vendor/* #{gopath}/"
 
   gitcommit = `git -C upstream rev-parse --short HEAD`.chomp
-  run './hack/make.sh binary', 'DOCKER_GITCOMMIT' => gitcommit, 'GOPATH' => gopath
+  run './hack/make.sh binary', {
+    'DOCKER_GITCOMMIT' => gitcommit,
+    'GOPATH' => gopath,
+    'CC' => 'musl-gcc',
+    'CGO_CFLAGS' => @forge.cflags.join(' '),
+    'CGO_LDFLAGS' => @forge.cflags.join(' '),
+    'PKG_CONFIG' => '/bin/true'
+  }
 
   run "mkdir -p #{releasedir}/usr/bin"
   run "cp bundles/latest/binary-client/docker #{releasedir}/usr/bin/"
