@@ -1,2 +1,2 @@
 FROM dock0/pkgforge
-RUN pacman -S --needed --noconfirm go btrfs-progs
+RUN pacman -S --needed --noconfirm go
