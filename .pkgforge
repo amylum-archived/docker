@@ -3,8 +3,8 @@ org 'amylum'
 
 deps(
   lvm2: {
-    version: '2.02.174-5',
-    checksum: '0da4ed8e5c6d543040dee8ab23c98cba59b447cfc524c5bcd944c8b3c23c5fa2'
+    version: '2.02.174-6',
+    checksum: 'd6ad56fe75f912118dff98120c2873d25aaa97143c33563b0fded6893026e5a8'
   },
   'linux-api-headers': {
     version: '4.13-1',
@@ -18,8 +18,6 @@ deps(
 
 cflags
 harden
-
-patch 'ldflags.patch'
 
 build do
   gopath = tmpdir(:gopath)
