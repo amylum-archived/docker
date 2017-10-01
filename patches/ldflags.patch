@@ -1,0 +1,12 @@
+diff --git a/hack/make/.binary b/hack/make/.binary
+index 01028c27e..77ef2507a 100644
+--- a/hack/make/.binary
++++ b/hack/make/.binary
+@@ -36,6 +36,7 @@ go build \
+ 	-o "$DEST/$BINARY_FULLNAME" \
+ 	"${BUILDFLAGS[@]}" \
+ 	-ldflags "
++		$CGO_LDFLAGS
+ 		$LDFLAGS
+ 		$LDFLAGS_STATIC_DOCKER
+ 	" \

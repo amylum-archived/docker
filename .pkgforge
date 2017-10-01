@@ -19,6 +19,8 @@ deps(
 cflags
 harden
 
+patch 'ldflags.patch'
+
 build do
   gopath = tmpdir(:gopath)
   run "mkdir -p #{gopath}/src/github.com/docker"
