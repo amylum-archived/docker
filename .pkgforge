@@ -3,16 +3,16 @@ org 'amylum'
 
 deps(
   lvm2: {
-    version: '2.02.177-2',
-    checksum: '54ae954b4c09c5a52a982ac4d59399fb1667c7ba99af015dc6565bd250f24372'
+    version: '2.02.177-3',
+    checksum: 'a2dc286ec19e23d1e2589542173716267d9c34d5d98803e6ff84808f9f00c4cc'
   },
   'linux-api-headers': {
     version: '4.14-1',
     checksum: '106c40ebd4826cf8fda5235cb9619e37d79efea6e64545d64bb78d4a829f29a6'
   },
   'btrfs-progs': {
-    version: '4.14-8',
-    checksum: 'e629d08259efac7af290d5b8673e82f6547b27e04caef0ff840e547739103cf1'
+    version: '4.14-9',
+    checksum: 'c5bda094052a914094cd47ec8ca9174ce7f6d5a79e88675a12c1ccc220dae788'
   }
 )
 
