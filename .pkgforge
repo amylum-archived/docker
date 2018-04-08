@@ -11,8 +11,8 @@ deps(
     checksum: '55af258de8663de5ec97db875651eaeecc209b47454dbbf27757d4de595e618d'
   },
   'btrfs-progs': {
-    version: '4.15.1-8',
-    checksum: 'def474e7314656aead1980519b435bb2a0506102a939cf32d8818be4111cce83'
+    version: '4.16-1',
+    checksum: '05bc4ea9bf4f956778d1772bf57d9d273811a929a5029d2282efd746e140f81d'
   }
 )
 
