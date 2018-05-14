@@ -6,10 +6,9 @@ my_slug = pkgforge.org + '/' + pkgforge.name
 
 item do
   expected do
-    url_xpath
-    url 'https://github.com/moby/moby/blob/master/CHANGELOG.md'
-    xpath '//*[@id="readme"]/article/h2[1]'
-    regex /^([\w.-]+) \([\d-]+\)$/
+    github_release
+    repo 'docker/docker-ce'
+    regex /^v([\w.-]+)$/
   end
 
   actual do

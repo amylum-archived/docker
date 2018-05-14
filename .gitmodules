@@ -1,6 +1,6 @@
 [submodule "upstream"]
 	path = upstream
-	url = git://github.com/docker/docker
+	url = https://github.com/docker/docker-ce
 [submodule "meta"]
 	path = meta
 	url = git://github.com/amylum/pkgforge-helper
