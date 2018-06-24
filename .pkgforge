@@ -13,6 +13,14 @@ deps(
   'btrfs-progs': {
     version: '4.17-2',
     checksum: '3647cf66a25d80fd955cde3007c7ce5bddd032a429a091c21b1111e16250a570'
+  },
+  libtool: {
+    version: '2.4.6-2',
+    checksum: '5a3a7cd180e16e399501a10cc13da752e4d4e3f86b73ae9afa5ffa9f63b86d3a'
+  },
+  libseccomp: {
+    version: '2.3.3-4',
+    checksum: '4cfe1658757993f588e0310ea7d68d5db8756e5ec93adc5502b6455e708d22b9'
   }
 )
 
@@ -21,23 +29,38 @@ harden
 
 build do
   gopath = tmpdir(:gopath)
-  run "mkdir -p #{gopath}/src/github.com/docker"
-  run "ln -s #{tmpdir(:build)} #{gopath}/src/github.com/docker/docker"
-  run "cp -R #{tmpdir(:build)}/vendor/* #{gopath}/"
+  ENV['GOPATH'] = gopath
 
-  gitcommit = `git -C upstream rev-parse --short HEAD`.chomp
-  run './hack/make.sh binary', {
-    'DOCKER_GITCOMMIT' => gitcommit,
-    'GOPATH' => gopath,
+  git_hash = `git --git-dir #{tmpdir(:build)}/.git rev-parse --short HEAD`.strip
+  git_version = `git --git-dir #{tmpdir(:build)}/.git describe --tag | sed 's/^v//'`.strip
+
+  def link_component(src, target)
+    run "mkdir -p #{ENV['GOPATH']}/src/#{target}"
+    run "rm -r #{ENV['GOPATH']}/src/#{target}"
+    run "ln -s #{tmpdir(:build)}/components/#{src}/ #{ENV['GOPATH']}/src/#{target}"
+  end
+
+  link_component('cli', 'github.com/docker/cli')
+  run(
+      "make -C #{ENV['GOPATH']}/src/github.com/docker/cli VERSION=#{git_version} dynbinary",
+      "DISABLE_WARN_OUTSIDE_CONTAINER" => "1",
+      'CC' => 'musl-gcc',
+      'CGO_CFLAGS' => @forge.cflags.join(' '),
+      'CGO_LDFLAGS' => @forge.cflags.join(' '),
+      'PKG_CONFIG' => '/bin/true'
+  )
+
+  link_component('engine', 'github.com/docker/docker')
+  run(
+    "cd #{ENV['GOPATH']}/src/github.com/docker/docker && ./hack/make.sh dynbinary",
+    "DOCKER_BUILDTAGS" => "seccomp",
+    "VERSION" => git_version,
+    "DOCKER_GITCOMMIT" => git_hash,
     'CC' => 'musl-gcc',
     'CGO_CFLAGS' => @forge.cflags.join(' '),
     'CGO_LDFLAGS' => @forge.cflags.join(' '),
     'PKG_CONFIG' => '/bin/true'
-  }
-
-  run "mkdir -p #{releasedir}/usr/bin"
-  run "cp bundles/latest/binary-client/docker #{releasedir}/usr/bin/"
-  run "cp bundles/latest/binary-daemon/dockerd #{releasedir}/usr/bin/"
+  )
 end
 
 test do
