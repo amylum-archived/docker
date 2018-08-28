@@ -1,7 +1,7 @@
 docker
 ==========
 
-[![Build Status](https://img.shields.io/circleci/project/amylum/docker/master.svg)](https://circleci.com/gh/amylum/docker)
+[![Build Status](https://img.shields.io/travis/com/amylum/docker.svg)](https://travis-ci.com/amylum/docker)
 [![GitHub release](https://img.shields.io/github/release/amylum/docker.svg)](https://github.com/amylum/docker/releases)
 [![Apache Licensed](http://img.shields.io/badge/license-Apache-green.svg)](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0))
 
