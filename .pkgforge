@@ -7,20 +7,20 @@ deps(
     checksum: 'd6843ae3b7cf32db32f384236a5012c3b211fe5086a9a82a634eb3a0a9f83d55'
   },
   'linux-api-headers': {
-    version: '4.18-1',
-    checksum: 'edc8dab0e57cb3868867a86d501eb5f314ad00d87e50957c3ffae113ce967298'
+    version: '4.19-1',
+    checksum: 'de68cab17c2354ee660b269ccca30e275a9314563ebdfb4f427fc5ebe1395f30'
   },
   'btrfs-progs': {
-    version: '4.17.1-7',
-    checksum: '91c2d2941b67bc77f4ad11db18ed795c2c57c37b7a575d88ae02efe9b5845536'
+    version: '4.19-1',
+    checksum: 'a7312b27d6d70e4dc29a2a68780a48a486a3b4b235abd17b5398f1aed4326cde'
   },
   libtool: {
     version: '2.4.6-2',
     checksum: '5a3a7cd180e16e399501a10cc13da752e4d4e3f86b73ae9afa5ffa9f63b86d3a'
   },
   libseccomp: {
-    version: '2.3.3-5',
-    checksum: '21d8e5462ad970bbda98214589323bc16d5d9f1c0e025a6008a773996b33e58d'
+    version: '2.3.3-6',
+    checksum: '78b400bc4b40281cef6d4d31a26035dbdfade3e0b0802c719a640c897f9ed745'
   }
 )
 
