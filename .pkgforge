@@ -11,16 +11,16 @@ deps(
     checksum: 'aed037b2b3fb2df77ca19359a20188d39c25d011febf4d3733d251fa87ca9636'
   },
   'btrfs-progs': {
-    version: '4.19.1-1',
-    checksum: 'efa0ad0cb96cd3c186f4929e8be9dff691cc16366a69b25c6ec59a858161cadc'
+    version: '4.19.1-2',
+    checksum: '04bf2890224993f518979d8cacecae654f87004b07fc37533ce0982338b5ff3d'
   },
   libtool: {
     version: '2.4.6-2',
     checksum: '5a3a7cd180e16e399501a10cc13da752e4d4e3f86b73ae9afa5ffa9f63b86d3a'
   },
   libseccomp: {
-    version: '2.3.3-6',
-    checksum: '78b400bc4b40281cef6d4d31a26035dbdfade3e0b0802c719a640c897f9ed745'
+    version: '2.3.3-7',
+    checksum: '7d4152c1350a68f714b3a79413f806e30c072f91e877b6343370cbe4ff7e8774'
   }
 )
 
