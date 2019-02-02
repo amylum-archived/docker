@@ -3,8 +3,8 @@ org 'amylum'
 
 deps(
   lvm2: {
-    version: '2.02.183-4',
-    checksum: '42222ba5e26f6e8f01ada207e2898d335154626a7394afd064b7d80522d711fd'
+    version: '2.02.183-6',
+    checksum: 'a162d0f8443998935d73b76dce3cd893cc1a37d3008e359f2eb5882744978731'
   },
   'linux-api-headers': {
     version: '4.20-1',
