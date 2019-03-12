@@ -3,24 +3,24 @@ org 'amylum'
 
 deps(
   lvm2: {
-    version: '2.02.183-6',
-    checksum: 'a162d0f8443998935d73b76dce3cd893cc1a37d3008e359f2eb5882744978731'
+    version: '2.02.183-8',
+    checksum: 'ccd97bf51305c02f66c099254bb463457aaa8149ac24a75f9b8f0d543cfe87d7'
   },
   'linux-api-headers': {
-    version: '4.20-1',
-    checksum: 'aed037b2b3fb2df77ca19359a20188d39c25d011febf4d3733d251fa87ca9636'
+    version: '5.0-1',
+    checksum: '0703e1a5406fea7aa0072034e815fc2b3188151732ec61b134b0e54aa3e752ab'
   },
   'btrfs-progs': {
-    version: '4.19.1-6',
-    checksum: '74b23041a65c4b4bb943f5a93fcf5f0eb3e9d2532224fa8f3dd1f6444f50346e'
+    version: '4.20.2-2',
+    checksum: '3e3ef7479dddd281511c1ad9b4fd5ac8b8e7a60fa60f6196cb360d630dfd7025'
   },
   libtool: {
     version: '2.4.6-2',
     checksum: '5a3a7cd180e16e399501a10cc13da752e4d4e3f86b73ae9afa5ffa9f63b86d3a'
   },
   libseccomp: {
-    version: '2.3.3-7',
-    checksum: '7d4152c1350a68f714b3a79413f806e30c072f91e877b6343370cbe4ff7e8774'
+    version: '2.3.3-8',
+    checksum: 'acd7430dcf45a155d646a871de117807174657e8361b76135b992e1bc3fce5e8'
   }
 )
 
