@@ -19,8 +19,8 @@ deps(
     checksum: '5a3a7cd180e16e399501a10cc13da752e4d4e3f86b73ae9afa5ffa9f63b86d3a'
   },
   libseccomp: {
-    version: '2.3.3-8',
-    checksum: 'acd7430dcf45a155d646a871de117807174657e8361b76135b992e1bc3fce5e8'
+    version: '2.4.0-1',
+    checksum: 'b987a5c738b8d2913fcbdb65d4682a64802d290eea5df9185b055bf21e4fca90'
   }
 )
 
